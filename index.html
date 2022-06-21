@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        
+        p{
+            
+          text-align: center;
+        }
+
+        .noselect {
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Old versions of Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                               supported by Chrome, Edge, Opera and Firefox */
+        }
+
+        .button {
+          background-color: red;
+          border: none;
+          color: white;
+          padding: 20px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+          border-radius: 50%;
+        }
+        
+        .overlay{
+            opacity:0.8;
+            background-color:#ccc;
+            position:fixed;
+            width:100%;
+            height:100%;
+            top:0px;
+            left:0px;
+        }
+
+        .border{
+            border-style:solid;
+            border-color:black;
+            margin: 1%;
+            height: 85%;
+
+        }
+
+    </style>
+    <title>Aim-Trainer</title>
+</head>
+<body>
+    
+
+
+
+    <div class="overlay" >
+       
+        <button id="exit" class="" onclick="exit()">Exit</button>
+
+        <p id="hitcount" class="noselect"></p>
+        <p id="misscount" class="noselect"></p>
+        
+        <div class="border" onclick="miss()">
+            <button id="target" class="button" onclick="moveButton()"></button>
+        <!--    <input id="target" class="button" onClick="moveButton()" type="image" src="target.png"/> -->
+      
+            
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+    let missCount = 0;
+    let hitCount = 0;
+
+
+    function exit(){
+        let text = "Press a button!\nEither OK or Cancel.";
+        if (confirm(text) == true) {
+            window.close()
+        }
+    }
+
+
+    function miss(){
+        missCount++;
+        moveElmRand();
+    }
+
+    function deleteButton(){
+       let button = document.getElementById("button");
+       button.remove();
+    }
+
+    function moveButton(){
+        hitCount++;
+        // for some reason the misscount increments too so i have to decrement it again here
+        missCount--;
+        moveElmRand();
+    }
+
+    //sets a random absolute position to a html element; receives the html element 
+    function moveElmRand(){ 
+        let elm = document.getElementById("target");
+        elm.style.position ='relative'; 
+        elm.style.top = Math.floor(Math.random()*80+5)+'%'; 
+        elm.style.left = Math.floor(Math.random()*80+5)+'%'; 
+        updateCount();
+    } 
+ 
+    //sets the hit and miss counters in the html element;
+    function updateCount(){
+        document.getElementById("hitcount").innerHTML = "Hits: " + hitCount;
+        document.getElementById("misscount").innerHTML = "Misses: " + missCount;
+    }
+    
+</script>
+
+</html>
